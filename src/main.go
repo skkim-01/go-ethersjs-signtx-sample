@@ -151,7 +151,12 @@ func _buildUnsignedRawData(
 	reserve := "0x"
 
 	rawData := make([]([]byte), 0)
-	rawData = append(rawData, util.HexString2Byte(strHexNonce))
+	if strHexNonce != "0x0" {
+		rawData = append(rawData, util.HexString2Byte(strHexNonce))
+	} else {
+		// when nonce is 0x0, using 0x in node js
+		rawData = append(rawData, util.HexString2Byte(reserve))
+	}
 	rawData = append(rawData, util.HexString2Byte(strHexGasPrice))
 	rawData = append(rawData, util.HexString2Byte(strHexGasLimit))
 	rawData = append(rawData, util.HexString2Byte(strHexToAddr))
@@ -180,6 +185,13 @@ func _buildSignedRawData(
 	reserve := "0x"
 
 	rawData := make([]([]byte), 0)
+
+	if strHexNonce != "0x0" {
+		rawData = append(rawData, util.HexString2Byte(strHexNonce))
+	} else {
+		// when nonce is 0x0, using 0x in node js
+		rawData = append(rawData, util.HexString2Byte(reserve))
+	}
 	rawData = append(rawData, util.HexString2Byte(strHexNonce))
 	rawData = append(rawData, util.HexString2Byte(strHexGasPrice))
 	rawData = append(rawData, util.HexString2Byte(strHexGasLimit))
